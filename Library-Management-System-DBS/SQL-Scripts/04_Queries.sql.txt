@@ -1,0 +1,56 @@
+-- =========================================
+-- 04. LIBRARY MANAGEMENT SYSTEM QUERIES
+-- =========================================
+
+-- 1. Display all books
+SELECT * FROM BOOKS;
+
+-- 2. Display all students
+SELECT * FROM STUDENTS;
+
+-- 3. Display all categories
+SELECT * FROM CATEGORIES;
+
+-- 4. Display all issued books
+SELECT * FROM ISSUES;
+
+-- 5. Display available books
+SELECT BOOK_ID, BOOK_NAME, AVAILABLE_COPIES
+FROM BOOKS
+WHERE AVAILABLE_COPIES > 0;
+
+-- 6. Display books with their category names
+SELECT B.BOOK_NAME, C.CATEGORY_NAME
+FROM BOOKS B
+JOIN CATEGORIES C
+ON B.CATEGORY_ID = C.CATEGORY_ID;
+
+-- 7. Display issue details with student names
+SELECT I.ISSUE_ID, S.STUDENT_NAME,
+       I.BOOK_ID, I.ISSUE_DATE, I.STATUS
+FROM ISSUES I
+JOIN STUDENTS S
+ON I.STUDENT_ID = S.STUDENT_ID;
+
+-- 8. Count total books
+SELECT COUNT(*) AS TOTAL_BOOKS
+FROM BOOKS;
+
+-- 9. Count books category-wise
+SELECT CATEGORY_ID, COUNT(*) AS TOTAL_BOOKS
+FROM BOOKS
+GROUP BY CATEGORY_ID;
+
+-- 10. Display returned books
+SELECT * FROM ISSUES
+WHERE STATUS = 'RETURNED';
+
+-- 11. Display currently issued books
+SELECT * FROM ISSUES
+WHERE STATUS = 'ISSUED';
+
+-- 12. Display overdue books
+SELECT *
+FROM ISSUES
+WHERE DUE_DATE < SYSDATE
+AND RETURN_DATE IS NULL;
